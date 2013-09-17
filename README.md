@@ -1,4 +1,6 @@
 gamer-redux
 ===========
 
-this is, strictly speaking, not a game. But who knows.
+This is not, strictly speaking, a game. but who knows.
+
+/peace
