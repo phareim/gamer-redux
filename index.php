@@ -21,6 +21,7 @@
             mySprite.width = 25;
             mySprite.height = 25;
             mySprite.speed = 150;
+            mySprite.tic = function(){return this};
             /*{
                 x: 100,
                 y: 100,
@@ -82,19 +83,38 @@
                         {
                             this.direction.up = false;
                         }
+                        
+                        return this;
+                    },
+                    hitTest:function()
+                    {
+                        if (this !== mySprite && hitTest(this, mySprite))
+                        {
+                            this.color = mySprite.color;
+                        }
                         return this;
                     }
-                };
+
+                    };
             }
             
-            function intersects(block1,block2) {
-                block2.width += block2.x;
-                block1.width += block1.x;
-                if (block2.x > block1.width || block1.x > block2.width) return false;
-                block2.height += block2.y;
-                block1.heigth += block1.y;
-                if (block2.y > block1.heigth || block1.y > block2.heigth) return false;
-              return true;
+            function hitTest(r1, r2)
+            {
+                if ( inXaxis(r1,r2) && inYaxis(r1,r2))
+                {
+                  return true;
+                }
+                else
+                {
+                  return false;
+                }
+            }
+            function inXaxis(r1,r2){
+                return ((r1.x + r1.width >= r2.x) && (r1.x <= r2.x + r2.width));
+            }
+            
+            function inYaxis(r1,r2){
+                return ((r1.y + r1.height >= r2.y) && (r1.y <= r2.y + r2.height));
             }
 
             var keysDown = {};
@@ -105,12 +125,6 @@
                 console.log("moved " + e.keyCode);
                 delete keysDown[e.keyCode];
             });
-            
-            function updateCherry(a_cherry, mod){
-                
-                a_cherry.changeDirection().tic(mod);
-                
-            }
             
             function update(mod) {
                 if (37 in keysDown && mySprite.x>0) {
@@ -145,7 +159,8 @@
                 update((Date.now() - time) / 1000);
                
                 cherries.forEach(function(a,b,c){
-                    updateCherry(a,(Date.now() - time) / 1000); 
+                    a.changeDirection().tic((Date.now() - time) / 1000).hitTest();
+                    
                 });
                 
                 cherries.filter(function(c){
