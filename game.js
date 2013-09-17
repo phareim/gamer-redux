@@ -17,7 +17,8 @@ mySprite.tic = function() {
 var cherries = [];
 
 var i = 0;
-while (i <= 350) {
+var boxCount = Math.round(Math.random())*400;
+while (i <= boxCount) {
     cherries[i] = new_cherry();
     i++;
 }
@@ -101,25 +102,24 @@ window.addEventListener('keyup', function(e) {
 
 function update(mod) {
     if (37 in keysDown && mySprite.x > 0) {
-        mySprite.x -= mySprite.speed * mod * 1.3;
+        mySprite.x -= mySprite.speed * mod * 3;
 
     }
     if (38 in keysDown && mySprite.y > 0) {
-        mySprite.y -= mySprite.speed * mod * 1.3;
+        mySprite.y -= mySprite.speed * mod * 3;
 
     }
     if (39 in keysDown && mySprite.x < (canvas.width - (mySprite.width))) {
-        mySprite.x += mySprite.speed * mod * 1.3;
+        mySprite.x += mySprite.speed * mod * 3;
     }
     if (40 in keysDown && mySprite.y < (canvas.height - (mySprite.height))) {
-        mySprite.y += mySprite.speed * mod * 1.3;
+        mySprite.y += mySprite.speed * mod * 3;
     }
 }
 
 function render() {
-    canvas.height = canvas.height;
-//    ctx.fillStyle = 'hsl(0,0%,100%, 0.5)';
-    ctx.fillStyle = 'rgba(0,0,0,0)';
+    canvas.height = canvas.height; // this resets the canvas.
+    ctx.fillStyle = 'rgba(0,0,0,0)'; // only the alpha really matters
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     cherries.forEach(function(a, b, c) {
         ctx.fillStyle = a.color;
@@ -135,6 +135,26 @@ function run() {
 
     cherries.forEach(function(a, b, c) {
         a.changeDirection().tic((Date.now() - time) / 1000).hitTest();
+        cherries.forEach(function(d, e, f){
+                if (hitTest(a,d) && a.color != d.color ){
+                    if(Math.random > 0.5 )
+                    { 
+                        d.color = a.color;
+                        d.height--;
+                        d.width--;
+                        a.height++;
+                        a.width++;
+                    } 
+                    else
+                    {
+                        a.color = d.color;
+                        a.height--;
+                        a.width--;
+                        d.height++;
+                        d.width++;
+                    }
+                }
+        });
     });
     render();
     time = Date.now();
