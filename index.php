@@ -58,8 +58,7 @@
                 return this;
            }
         }
-        var cherries = [1,2,3,4,5,6,7,8,9,10];
-        
+
         var keysDown = {};
 		window.addEventListener('keydown', function(e) {
             keysDown[e.keyCode] = true;
@@ -104,15 +103,7 @@
         
 		function run() {
 			update((Date.now() - time) / 1000);
-            
         	updateCherry(cherry,(Date.now() - time) / 1000);
-
-            
-            cherries.forEach(function(a,b,c){
-                
-            });
-            
-
 			render();
 			time = Date.now();
 		}
