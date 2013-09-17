@@ -6,18 +6,19 @@
 	<title>Chase the light</title>
 </head>
 <body>
-	<canvas id="canvas"></canvas>
+	<canvas id="canvas">
+    </canvas>
 	
 	<script type="text/javascript">
 		var canvas = document.getElementById('canvas');
 		var ctx = canvas.getContext('2d');
-		 
-		canvas.width = 400;
-		canvas.height = 600;
+		var counter = document.getElementById('counter');
+		canvas.width = document.getElementsByTagName('body')[0].clientWidth-10;
+		canvas.height =  window.innerHeight-20;
 
 		var mySprite = {
-			x: 200,
-			y: 200,
+			x: 100,
+			y: 100,
 			width: 25,
 			height: 25,
 			speed: 200,
@@ -30,14 +31,35 @@
             width: 10,
             height: 10,
             color: '#fff',
-			speed: 60,
-			direction: {up: false,
-			            right:false}
+			speed: 150,
+			direction: 
+            {
+                up: false, right:false
+            },
+            
+            tic:function(mod)
+            {           
+               this.direction.right ? this.x += this.speed * mod :this.x -= this.speed * mod; 
+               this.direction.up    ? this.y += this.speed * mod :this.y -= this.speed * mod;
+               return this;   
+            },
+            
+            changeDirection:function()
+            {
+               if( this.x <0 || this.x > canvas.width-(this.width))
+               {
+                   this.direction.right = !this.direction.right;
+               }
+               if(this.y <0 || this.y > canvas.height-(this.height))
+               {
+                   this.direction.up = !this.direction.up;
+               }
+                return this;
+           }
         }
+        var cherries = [1,2,3,4,5,6,7,8,9,10];
         
-        var cherries = [cherry];
-
-		var keysDown = {};
+        var keysDown = {};
 		window.addEventListener('keydown', function(e) {
             keysDown[e.keyCode] = true;
 		});
@@ -46,43 +68,26 @@
 			delete keysDown[e.keyCode];
 		});
 
-        function updateCherry(){
-           if(cherry.direction.right){
-               cherry.x ++;
-           }else{
-               cherry.x --;
-           }
-           if(cherry.x <0 || cherry.x > canvas.width-(cherry.width)){
-               cherry.direction.right = !cherry.direction.right;
-           }
-           if(cherry.direction.up){
-               cherry.y --;
-           }else {
-               cherry.y ++;
-           }
-           if(cherry.y <0 || cherry.y > canvas.height-(cherry.height)){
-               cherry.direction.up = !cherry.direction.up;
-           }
+        function updateCherry(a_cherry, mod){
+            
+                a_cherry.tic(mod).changeDirection();
+            
         }
 
 		function update(mod) {
-			if (37 in keysDown) {
-			    if(mySprite.x>0){
-				    mySprite.x -= mySprite.speed * mod;
-			    }
+			if (37 in keysDown && mySprite.x>0) {
+			   mySprite.x -= mySprite.speed * mod;
+			    
 			}
-			if (38 in keysDown) {
-			    if(mySprite.y>0){
-				    mySprite.y -= mySprite.speed * mod;
-			    }
+			if (38 in keysDown && mySprite.y>0) {
+			   mySprite.y -= mySprite.speed * mod;
+			    
 			}
-			if (39 in keysDown) {
-			    if(mySprite.x < (canvas.width-(mySprite.width)))
-				    mySprite.x += mySprite.speed * mod;
+			if (39 in keysDown && mySprite.x < (canvas.width-(mySprite.width))) {
+			   mySprite.x += mySprite.speed * mod;
 			}
-			if (40 in keysDown) {
-			    if(mySprite.y < (canvas.height-(mySprite.height)))
-				    mySprite.y += mySprite.speed * mod;
+			if (40 in keysDown && mySprite.y < (canvas.height-(mySprite.height))) {
+			   mySprite.y += mySprite.speed * mod;
 			}
 		}
 		
@@ -95,11 +100,18 @@
 			ctx.fillStyle = mySprite.color;
 			ctx.fillRect(mySprite.x, mySprite.y, mySprite.width, mySprite.height);
 		}
-
+        
 		function run() {
 			update((Date.now() - time) / 1000);
-			updateCherry();
-			
+            
+        	updateCherry(cherry,(Date.now() - time) / 1000);
+
+            
+            cherries.forEach(function(a,b,c){
+                
+            });
+            
+
 			render();
 			time = Date.now();
 		}
