@@ -31,10 +31,10 @@ function new_cherry() {
         width: 10,
         height: 10,
         color:
-            "rgb(" + (Math.round(Math.random() * 256)) +
-                "," + (Math.round(Math.random() * 256)) +
-                "," + (Math.round(Math.random() * 256)) +
-                ")",
+            "hsl(" + (Math.round(Math.random() * 360)) +
+                "," + (Math.round(Math.random() * 100)) +
+                "%," + (Math.round(Math.random() * 100)) +
+                "%)",
         speed: Math.random() * 200,
         direction:
         {
@@ -117,7 +117,9 @@ function update(mod) {
 }
 
 function render() {
-    ctx.fillStyle = '#666';
+    canvas.height = canvas.height;
+//    ctx.fillStyle = 'hsl(0,0%,100%, 0.5)';
+    ctx.fillStyle = 'rgba(0,0,0,0)';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     cherries.forEach(function(a, b, c) {
         ctx.fillStyle = a.color;
