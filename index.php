@@ -27,8 +27,8 @@
             
             function new_cherry(){
                 return{
-                    x: (Math.random()+0.3)*100,
-                    y: (Math.random()+0.3)*100,
+                    x: ((Math.random()+0.3)*100)+20,
+                    y: ((Math.random()+0.3)*100)+20,
                     width: 10,
                     height: 10,
                     color: 
