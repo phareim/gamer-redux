@@ -47,9 +47,9 @@
                     width: 10,
                     height: 10,
                     color: 
-                    "rgb("+(Math.round(Math.random()*255))+
-                    ","+(Math.round(Math.random()*255))+
-                    ","+(Math.round(Math.random()*255))+
+                    "rgb("+(Math.round(Math.random()*256))+
+                    ","+(Math.round(Math.random()*256))+
+                    ","+(Math.round(Math.random()*256))+
                     ")",
                     speed: Math.random()*200,
                     direction: 
@@ -114,18 +114,18 @@
             
             function update(mod) {
                 if (37 in keysDown && mySprite.x>0) {
-                    mySprite.x -= mySprite.speed * mod*1.2;
+                    mySprite.x -= mySprite.speed * mod*1.3;
                     
                 }
                 if (38 in keysDown && mySprite.y>0) {
-                    mySprite.y -= mySprite.speed * mod*1.2;
+                    mySprite.y -= mySprite.speed * mod*1.3;
                     
                 }
                 if (39 in keysDown && mySprite.x < (canvas.width-(mySprite.width))) {
-                    mySprite.x += mySprite.speed * mod*1.2;
+                    mySprite.x += mySprite.speed * mod*1.3;
                 }
                 if (40 in keysDown && mySprite.y < (canvas.height-(mySprite.height))) {
-                    mySprite.y += mySprite.speed * mod*1.2;
+                    mySprite.y += mySprite.speed * mod*1.3;
                 }
             }
             
