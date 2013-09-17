@@ -3,6 +3,7 @@
 <html lang="en">
 <head>
 	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+	<meta name="apple-mobile-web-app-capable" content="yes">
 	<title>Chase the light</title>
 </head>
 <body>
