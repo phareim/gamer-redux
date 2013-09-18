@@ -17,7 +17,7 @@ mySprite.tic = function() {
 var cherries = [];
 
 var i = 0;
-var boxCount = Math.round(Math.random())*400;
+var boxCount = 1000;//100 +( Math.round(Math.random()*900) );
 while (i <= boxCount) {
     cherries[i] = new_cherry();
     i++;
@@ -57,17 +57,23 @@ function new_cherry() {
                 this.direction.right = false;
             }
             if (this.y <= 0) {
+                this.color = 'white';
                 this.direction.up = true;
             }
             if (this.y >= canvas.height - (this.height)) {
+                this.color=
+                "hsl(" + (Math.round(Math.random() * 360)) +
+                "," + (Math.round(Math.random() * 100)) +
+                "%," + (Math.round(Math.random() * 100)) +
+                "%)";
                 this.direction.up = false;
             }
             return this;
         },
         hitTest: function() {
-            if (this !== mySprite && hitTest(this, mySprite)) {
+            /*if (this !== mySprite && hitTest(this, mySprite)) {
                 this.color = mySprite.color;
-            }
+            }*/
             return this;
         }
     };
