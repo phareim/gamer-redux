@@ -135,7 +135,7 @@ function run() {
 
     cherries.forEach(function(a, b, c) {
         a.changeDirection().tic((Date.now() - time) / 1000).hitTest();
-        cherries.forEach(function(d, e, f){
+        /*cherries.forEach(function(d, e, f){
                 if (hitTest(a,d) && a.color != d.color ){
                     if(Math.random > 0.5 )
                     { 
@@ -154,7 +154,7 @@ function run() {
                         d.width++;
                     }
                 }
-        });
+        });*/
     });
     render();
     time = Date.now();
