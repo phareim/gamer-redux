@@ -71,9 +71,9 @@ function new_cherry() {
             return this;
         },
         hitTest: function() {
-            /*if (this !== mySprite && hitTest(this, mySprite)) {
+            if (this !== mySprite && hitTest(this, mySprite)) {
                 this.color = mySprite.color;
-            }*/
+            }
             return this;
         }
     };
