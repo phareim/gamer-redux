@@ -12,8 +12,8 @@ function randomColor(){
 }
 
 var mySprite = new_cherry();
-mySprite.width = 25;
-mySprite.height = 25;
+mySprite.width = 10;
+mySprite.height = 10;
 mySprite.speed = 300;
 mySprite.tic = function() {
     return this
@@ -22,15 +22,15 @@ mySprite.tic = function() {
 var cherries = [];
 
 var i = 0;
-var boxCount = 1000;//100 +( Math.round(Math.random()*900) );
+var boxCount = 200;//100 +( Math.round(Math.random()*900) );
 while (i <= boxCount) {
     cherries[i] = new_cherry();
     i++;
 }
-function move(direction, obj){
-    direction.right ? obj.x += obj.speed * mod : obj.x -= obj.speed * mod;
-    direction.up ? obj.y += obj.speed * mod : obj.y -= obj.speed * mod;
-    return obj;
+function move(direction, _speed,x){
+    direction ? x += _speed * 1000 : x -= _speed * 1000;
+    return x;
+
 }
 
 function new_cherry() {
@@ -42,24 +42,19 @@ function new_cherry() {
         height: 10,
         color: '#123456',
         speed: Math.random()*300,
-        x_speed: Math.random()*5,
-        y_speed: Math.random()*5,
+      _speed: {x:Math.random()*400,y:Math.random()*400},
         direction:
         {
             up: Math.random() > 0.5 ? true : false,
             right: Math.random() > 0.5 ? true : false
         },
-        step: function(direction)
+        tic: function(mod)
         {
-            direction.right ? this.x += this.speed * mod : this.x -= this.speed * mod;
-            direction.up ? this.y += this.speed * mod : this.y -= this.speed * mod;
-        },
-        tic: function(mod) 
-        {
-//            return move(this.direction, this);
-            this.direction.right ? this.x += this.speed * mod : this.x -= this.speed * mod;
-            this.direction.up ? this.y += this.speed * mod : this.y -= this.speed * mod;
-            //step(this.direction);
+            this.direction.right ? this.x += this._speed.x * mod : this.x -= this._speed.x * mod;
+            this.direction.up ? this.y += this._speed.y * mod : this.y -= this._speed.y * mod;
+
+          //this.x = move(this.direction.x,this._speed.x,this.x);
+          //this.y = move(this.direction.y,this._speed.y,this.y);
             return this;
         },
 
@@ -118,18 +113,18 @@ window.addEventListener('keyup', function(e) {
 
 function update(mod) {
     if (37 in keysDown && mySprite.x > 0) {
-        mySprite.x -= mySprite.speed * mod * 3;
+        mySprite.x -= mySprite.speed * mod;
 
     }
     if (38 in keysDown && mySprite.y > 0) {
-        mySprite.y -= mySprite.speed * mod * 3;
+        mySprite.y -= mySprite.speed * mod;
 
     }
     if (39 in keysDown && mySprite.x < (canvas.width - (mySprite.width))) {
-        mySprite.x += mySprite.speed * mod * 3;
+        mySprite.x += mySprite.speed * mod;
     }
     if (40 in keysDown && mySprite.y < (canvas.height - (mySprite.height))) {
-        mySprite.y += mySprite.speed * mod * 3;
+        mySprite.y += mySprite.speed * mod;
     }
 }
 
@@ -161,13 +156,13 @@ function run() {
         /*cherries.forEach(function(d, e, f){
                 if (hitTest(a,d) && a.color != d.color ){
                     if(Math.random > 0.5 )
-                    { 
+                    {
                         d.color = a.color;
                         d.height--;
                         d.width--;
                         a.height++;
                         a.width++;
-                    } 
+                    }
                     else
                     {
                         a.color = d.color;
