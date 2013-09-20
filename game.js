@@ -141,6 +141,13 @@ function run() {
 
     cherries.forEach(function(a, b, c) {
         a.changeDirection().tic((Date.now() - time) / 1000).hitTest();
+        var filtered;
+        /*= c.filter(c){hitTest(a,c)};
+        /*.forEach(function(d,e,f){
+            var tmp_color = a.color;
+            a.color = d.color;
+            d.color = tmp_color;
+        });*/
         /*cherries.forEach(function(d, e, f){
                 if (hitTest(a,d) && a.color != d.color ){
                     if(Math.random > 0.5 )
