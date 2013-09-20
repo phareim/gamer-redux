@@ -4,13 +4,18 @@ var counter = document.getElementById('counter');
 canvas.width = document.getElementsByTagName('body')[0].clientWidth - 40;
 canvas.height = window.innerHeight - 120;
 
+function randomColor(){
+    return "hsl(" + (Math.round(Math.random() * 360)) +
+            "," + (Math.round(Math.random() * 100)) +
+            "%," + (Math.round(Math.random() * 100)) +
+            "%)";
+}
 
 var mySprite = new_cherry();
 mySprite.width = 25;
 mySprite.height = 25;
-mySprite.speed = 150;
+mySprite.speed = 300;
 mySprite.tic = function() {
-
     return this
 };
 
@@ -22,7 +27,11 @@ while (i <= boxCount) {
     cherries[i] = new_cherry();
     i++;
 }
-cherries[i] = mySprite;
+function move(direction, obj){
+    direction.right ? obj.x += obj.speed * mod : obj.x -= obj.speed * mod;
+    direction.up ? obj.y += obj.speed * mod : obj.y -= obj.speed * mod;
+    return obj;
+}
 
 function new_cherry() {
     return {
@@ -31,21 +40,26 @@ function new_cherry() {
         y: Math.round(((Math.random() * window.innerHeight) / 6)) + window.innerHeight / 4,
         width: 10,
         height: 10,
-        color:
-            "hsl(" + (Math.round(Math.random() * 360)) +
-                "," + (Math.round(Math.random() * 100)) +
-                "%," + (Math.round(Math.random() * 100)) +
-                "%)",
-        speed: Math.random() * 200,
+        color: '#123456',
+        speed: Math.random()*300,
+        x_speed: Math.random()*5,
+        y_speed: Math.random()*5,
         direction:
         {
             up: Math.random() > 0.5 ? true : false,
             right: Math.random() > 0.5 ? true : false
         },
-
-        tic: function(mod) {
+        step: function(direction)
+        {
+            direction.right ? this.x += this.speed * mod : this.x -= this.speed * mod;
+            direction.up ? this.y += this.speed * mod : this.y -= this.speed * mod;
+        },
+        tic: function(mod) 
+        {
+//            return move(this.direction, this);
             this.direction.right ? this.x += this.speed * mod : this.x -= this.speed * mod;
             this.direction.up ? this.y += this.speed * mod : this.y -= this.speed * mod;
+            //step(this.direction);
             return this;
         },
 
@@ -61,11 +75,7 @@ function new_cherry() {
                 this.direction.up = true;
             }
             if (this.y >= canvas.height - (this.height)) {
-                this.color=
-                "hsl(" + (Math.round(Math.random() * 360)) +
-                "," + (Math.round(Math.random() * 100)) +
-                "%," + (Math.round(Math.random() * 100)) +
-                "%)";
+                this.color='black';
                 this.direction.up = false;
             }
             return this;
